@@ -2,6 +2,8 @@
 
 ## Introduction
 
+Android 6.0 (API 23+) updated their [permissions handling](http://developer.android.com/intl/ko/training/permissions/requesting.html). This plugin helps with requesting permissions within Unity3D at runtime. 
+
 ## How to use
 
 1. Add PermissionProvider component to any GameObject in your Scene.
