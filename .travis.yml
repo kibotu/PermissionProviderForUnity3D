@@ -1,0 +1,46 @@
+language: android
+jdk:
+  - oraclejdk8
+
+# BugFix for 'git rev-list --full-history --all' showing too low commit count
+git:
+  depth: 10000
+
+env:
+  global:
+  - TERM=dumb
+  - GRADLE_OPTS="-Xmx1024m -Xms256m -XX:MaxPermSize=256m -XX:+CMSClassUnloadingEnabled"
+
+matrix:
+  fast_finish: true
+
+android:
+  components:
+    - tools
+    - build-tools-23.0.2
+    - android-23
+    - platform-tools
+    - extra-android-support
+    - extra-android-m2repository
+    - extra-google-google_play_services
+    - extra-google-m2repository
+  licenses:
+    - android-sdk-license-.+
+
+before_install:
+  - git submodule update --init --recursive
+  - chmod u+x gradlew
+  - android list sdk --no-ui --all --extended
+  - android list targets
+
+install: true
+
+script:
+  - ./gradlew -v
+  - ./gradlew assembleRelease --stacktrace --info -Dpre-dex=false
+
+after_failure: true
+
+notifications:
+  email: false
+
